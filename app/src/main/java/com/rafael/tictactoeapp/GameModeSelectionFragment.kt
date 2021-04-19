@@ -9,19 +9,22 @@ import androidx.navigation.fragment.findNavController
 import com.rafael.tictactoeapp.databinding.GameModeSelectionFragmentBinding
 
 
-class GameModeSelection : Fragment() {
+class GameModeSelectionFragment : Fragment() {
 
-    val binding : GameModeSelectionFragmentBinding? = null
+    var binding : GameModeSelectionFragmentBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.game_mode_selection_fragment, container, false)
+        val fragmentBinding = GameModeSelectionFragmentBinding.inflate(inflater, container, false)
+        binding = fragmentBinding
+        return fragmentBinding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.buttonPvp?.setOnClickListener { findNavController().navigate(GameModeSelectionDirections.actionGameModeSelectionToPlayerNameFragment()) }
+        binding?.buttonPvp?.setOnClickListener { findNavController().navigate(GameModeSelectionFragmentDirections.actionGameModeSelectionToPlayerNameFragment()) }
     }
     }

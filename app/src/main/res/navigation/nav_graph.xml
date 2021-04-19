@@ -9,14 +9,23 @@
         android:id="@+id/playerNameFragment"
         android:name="com.rafael.tictactoeapp.PlayerNameFragment"
         android:label="player_name_fragment"
-        tools:layout="@layout/player_name_fragment" />
+        tools:layout="@layout/player_name_fragment" >
+        <action
+            android:id="@+id/action_playerNameFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gameModeSelection"
-        android:name="com.rafael.tictactoeapp.GameModeSelection"
+        android:name="com.rafael.tictactoeapp.GameModeSelectionFragment"
         android:label="game_mode_selection_fragment"
         tools:layout="@layout/game_mode_selection_fragment" >
         <action
             android:id="@+id/action_gameModeSelection_to_playerNameFragment"
             app:destination="@id/playerNameFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.rafael.tictactoeapp.GameFragment"
+        android:label="game_fragment"
+        tools:layout="@layout/game_fragment" />
 </navigation>

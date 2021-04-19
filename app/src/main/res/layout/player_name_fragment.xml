@@ -12,28 +12,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/hello_blank_fragment"
-        android:textSize="50dp"
+        android:text="Select Player Name"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="159dp" />
+
+    <EditText
+        android:id="@+id/player1_name"
+        android:text="Player 1"
+        app:layout_constraintTop_toBottomOf="@+id/text1"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="159dp"
+        style="@style/player_name_insert"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/player_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintTop_toBottomOf="@+id/text1"
-        tools:layout_editor_absoluteX="0dp" />
+        android:id="@+id/player2_name"
+        style="@style/player_name_insert"
+        android:layout_marginTop="5dp"
+        android:text="Player 2"
+        app:layout_constraintTop_toBottomOf="@+id/player1_name"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Button"
-        app:layout_constraintTop_toBottomOf="@+id/player_name"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="159dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player2_name"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
