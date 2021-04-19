@@ -30,11 +30,13 @@ class PlayerNameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ticTacViewModel.players.observe(viewLifecycleOwner, Observer { playerState -> binding!!.text1.text=
+
+        //observes the LiveData object
+        ticTacViewModel.players.observe(viewLifecycleOwner, Observer { binding!!.text1.text=
             ticTacViewModel.players.value?.get(0)?.name ?: ""
         })
 
-
+        //once the start button is pressed, player 1 and player 2 are created, receiving the names typed on the boxes
         binding?.button?.setOnClickListener { ticTacViewModel.createPlayers(binding!!.playerName.text.toString(), binding!!.playerName.text.toString())
 
     }
