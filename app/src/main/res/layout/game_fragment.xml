@@ -9,8 +9,9 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/constraintLayout"
 
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,5 +43,51 @@
             app:layout_constraintStart_toEndOf="@+id/score_board_scores"
             tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <Button style="@style/cell" android:id="@+id/a1"></Button>
+
+        <Button style="@style/cell" android:id="@+id/b1"></Button>
+
+        <Button style="@style/cell" android:id="@+id/c1"></Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <Button style="@style/cell"  android:id="@+id/a2"></Button>
+
+        <Button style="@style/cell" android:id="@+id/b2"></Button>
+
+        <Button style="@style/cell" android:id="@+id/c2"></Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <Button style="@style/cell" android:id="@+id/a3"></Button>
+
+        <Button style="@style/cell" android:id="@+id/b3"></Button>
+
+        <Button style="@style/cell" android:id="@+id/c3"></Button>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

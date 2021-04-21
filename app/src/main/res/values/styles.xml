@@ -20,4 +20,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <style name="cell">
+        <item name="android:layout_width">100sp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_height">100sp</item>
+    </style>
 </resources>
