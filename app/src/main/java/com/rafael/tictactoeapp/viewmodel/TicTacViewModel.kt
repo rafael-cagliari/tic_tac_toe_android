@@ -1,21 +1,14 @@
 package com.rafael.tictactoeapp.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.rafael.tictactoeapp.GameFragment
-import com.rafael.tictactoeapp.databinding.GameFragmentBinding
 import com.rafael.tictactoeapp.model.Player
-import kotlinx.coroutines.withContext
 
 
 class TicTacViewModel : ViewModel() {
 
     var turn = "player1"
-    var first_player = "player1"
-    var reset = "OFF"
 
     private val _players = MutableLiveData<List<Player>>()
     val players: LiveData<List<Player>> get() = _players
@@ -33,20 +26,19 @@ class TicTacViewModel : ViewModel() {
         return result
     }
 
-    fun switchTurn() {
+    private fun switchTurn() {
         if (turn == "player1") turn = "player2"
         else if (turn == "player2") turn = "player1"
     }
 
     fun addToMovesList(cell: String) {
-        if (turn == "player1") players.value?.get(0)?.moves?.add(cell)
-        else if (turn == "player2") players.value?.get(1)?.moves?.add(cell)
+        if (turn == "player1") _players.value?.get(0)?.moves?.add(cell)
+        else if (turn == "player2") _players.value?.get(1)?.moves?.add(cell)
     }
 
     fun checkWin() {
-        var moves = players.value!![0].moves
-        if (turn == "player2") moves = players.value!![1].moves
-
+        var moves = _players.value!![0].moves
+        if (turn == "player2") moves = _players.value!![1].moves
 
         val sequence1 = listOf("a1", "a2", "a3")
         val sequence2 = listOf("b1", "b2", "b3")
@@ -57,7 +49,7 @@ class TicTacViewModel : ViewModel() {
         val sequence7 = listOf("a2", "b2", "c2")
         val sequence8 = listOf("a1", "b2", "c3")
 
-        var sorted = moves.sorted()
+        val sorted = moves.sorted()
 
         if (sorted.containsAll(sequence1) || sorted.containsAll(sequence2) || sorted.containsAll(
                 sequence3
@@ -67,14 +59,11 @@ class TicTacViewModel : ViewModel() {
             || sorted.containsAll(sequence7) || sorted.containsAll(sequence8)
         ) {
             updateScore()
-        }
-
-        else if(players.value!![0].moves.size+players.value!![1].moves.size==9)resetGame()
-
+        } else if (_players.value!![0].moves.size + _players.value!![1].moves.size == 9) resetGame()
         else switchTurn()
     }
 
-    fun updateScore() {
+    private fun updateScore() {
 
         if (turn == "player1") _players.value!![0].score = _players.value!![0].score + 1
         else _players.value!![1].score = _players.value!![1].score + 1
@@ -88,10 +77,10 @@ class TicTacViewModel : ViewModel() {
         _players.value = _players.value
     }
 
-    fun resetGame(){
+    private fun resetGame() {
         switchTurn()
-        _players.value!!.get(0).moves.clear()
-        _players.value!!.get(1).moves.clear()
+        _players.value!![0].moves.clear()
+        _players.value!![1].moves.clear()
         _players.notifyObserver()
     }
 
