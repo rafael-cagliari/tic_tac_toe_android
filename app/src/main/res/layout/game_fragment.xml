@@ -57,7 +57,7 @@
 
         <Button style="@style/cell" android:id="@+id/b1"></Button>
 
-        <Button style="@style/cell" android:id="@+id/c1"></Button>
+        <Button style="@style/cell" android:id="@+id/c1" android:layout_marginRight="0dp"></Button>
 
     </LinearLayout>
 
@@ -73,7 +73,7 @@
 
         <Button style="@style/cell" android:id="@+id/b2"></Button>
 
-        <Button style="@style/cell" android:id="@+id/c2"></Button>
+        <Button style="@style/cell" android:id="@+id/c2" android:layout_marginRight="0dp"></Button>
     </LinearLayout>
 
     <LinearLayout
@@ -87,7 +87,7 @@
 
         <Button style="@style/cell" android:id="@+id/b3"></Button>
 
-        <Button style="@style/cell" android:id="@+id/c3"></Button>
+        <Button style="@style/cell" android:id="@+id/c3" android:layout_marginRight="0dp"></Button>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

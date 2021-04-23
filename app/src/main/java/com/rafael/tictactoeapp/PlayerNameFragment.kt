@@ -33,7 +33,9 @@ class PlayerNameFragment : Fragment() {
         binding?.button?.text = "Start Game"
         val ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
         //once the start button is pressed, player 1 and player 2 are created, receiving the names typed on the boxes
-        binding?.button?.setOnClickListener { ticTacViewModel.createPlayers(binding!!.player1Name.text.toString(), binding!!.player2Name.text.toString())
+        binding?.button?.setOnClickListener {
+            if(binding?.player1Name?.text.toString()!= "" && binding?.player2Name?.text.toString()!=""){
+            ticTacViewModel.createPlayers(binding!!.player1Name.text.toString(), binding!!.player2Name.text.toString())
         findNavController().navigate(PlayerNameFragmentDirections.actionPlayerNameFragmentToGameFragment())
-    }
+    }}
 }}

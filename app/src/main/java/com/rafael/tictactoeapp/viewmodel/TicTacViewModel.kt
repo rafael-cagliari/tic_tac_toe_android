@@ -66,7 +66,6 @@ class TicTacViewModel : ViewModel() {
             )
             || sorted.containsAll(sequence7) || sorted.containsAll(sequence8)
         ) {
-            Log.d("teste win", "win $moves")
             updateScore()
         }
 
@@ -94,8 +93,6 @@ class TicTacViewModel : ViewModel() {
         _players.value!!.get(0).moves.clear()
         _players.value!!.get(1).moves.clear()
         _players.notifyObserver()
-
-
     }
 
 }
