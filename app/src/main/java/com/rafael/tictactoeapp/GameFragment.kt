@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.rafael.tictactoeapp.databinding.GameFragmentBinding
 import com.rafael.tictactoeapp.viewmodel.TicTacViewModel
 
 
 class GameFragment : Fragment() {
 
-    private val ticTacViewModel: TicTacViewModel by viewModels()
+    private lateinit var ticTacViewModel: TicTacViewModel
 
-    var binding:GameFragmentBinding? = null
+    var binding: GameFragmentBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,13 +29,15 @@ class GameFragment : Fragment() {
         // Inflate the layout for this fragment
         val fragmentBinding = GameFragmentBinding.inflate(inflater, container, false)
         binding = fragmentBinding
+        ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
         return fragmentBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-     binding!!.scoreBoard.text= "oie"
-        Toast.makeText(context, ticTacViewModel.players.value?.get(0)?.name, Toast.LENGTH_SHORT).show()
+        binding!!.scoreBoard.text = "oie"
+        Toast.makeText(context, ticTacViewModel.players.value?.get(0)?.name, Toast.LENGTH_SHORT)
+            .show()
     }
 
-    }
+}
