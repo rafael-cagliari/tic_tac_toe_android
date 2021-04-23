@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.rafael.tictactoeapp.databinding.PlayerNameFragmentBinding
@@ -34,10 +32,11 @@ class PlayerNameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
         binding?.button?.text = "Start Game"
-
+        val ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
         //once the start button is pressed, player 1 and player 2 are created, receiving the names typed on the boxes
-        binding?.button?.setOnClickListener { ticTacViewModel.createPlayers(binding!!.player1Name.text.toString(), binding!!.player2Name.text.toString())
+        binding?.button?.setOnClickListener {
+            if(binding?.player1Name?.text.toString()!= "" && binding?.player2Name?.text.toString()!=""){
+            ticTacViewModel.createPlayers(binding!!.player1Name.text.toString(), binding!!.player2Name.text.toString())
         findNavController().navigate(PlayerNameFragmentDirections.actionPlayerNameFragmentToGameFragment())
-            Toast.makeText(context, ticTacViewModel.players.value?.get(0)?.name, Toast.LENGTH_SHORT).show()
-    }
+    }}
 }}
