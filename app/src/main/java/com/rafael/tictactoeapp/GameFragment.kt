@@ -36,17 +36,22 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //ViewModel observer
         ticTacViewModel.players.observe(viewLifecycleOwner, Observer {
             binding!!.apply {
 
+                //make the player's name change color during their turn
                 if(ticTacViewModel.turn=="player1") {scoreBoardPlayer1.setTextColor(resources.getColor(R.color.purple_700)); scoreBoardPlayer2.setTextColor(resources.getColor(R.color.black)) }
                 if(ticTacViewModel.turn=="player2") {scoreBoardPlayer2.setTextColor(resources.getColor(R.color.purple_700)); scoreBoardPlayer1.setTextColor(resources.getColor(R.color.black)) }
 
+                //shows names and score; updates score
                 scoreBoardPlayer1.text = ticTacViewModel.players.value?.get(0)?.name
                 scoreBoardScores.text = " ${ticTacViewModel.players.value?.get(0)?.score}  X  ${
                     ticTacViewModel.players.value?.get(1)?.score
                 } "
                 scoreBoardPlayer2.text = ticTacViewModel.players.value?.get(1)?.name
+
+                //calls clearCells when the moves property is empty (when game is resetted or when a new match starts)
                 if (ticTacViewModel.players.value?.get(0)?.moves?.size == 0 && ticTacViewModel.players.value?.get(
                         1
                     )?.moves?.size == 0
@@ -54,14 +59,19 @@ class GameFragment : Fragment() {
             }
         })
 
+
+        //reset button logic
         binding?.resetButton?.setOnClickListener {
             ticTacViewModel.resetGameButton()
         }
 
+        //stop button logic
         binding?.stopButton?.setOnClickListener {
             ticTacViewModel.stopGame()
         }
 
+
+        //cell buttons logic; when clicked: adds cell's coordinate into player's move list, changes into X or O depending on turn variable, check if player won
         binding?.a1?.setOnClickListener {
             if (binding!!.a1.text == "") {
                 ticTacViewModel.addToMovesList("a1")
@@ -128,6 +138,7 @@ class GameFragment : Fragment() {
         }
     }
 
+    //clears all the cells, making the grid empty for starting a new match
     fun clearCells() {
         binding?.a1?.text = ""
         binding?.a2?.text = ""
