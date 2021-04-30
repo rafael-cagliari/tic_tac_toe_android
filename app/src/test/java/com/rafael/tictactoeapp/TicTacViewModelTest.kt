@@ -15,7 +15,7 @@ class TicTacViewModelTest {
     private var ticTacViewModel: TicTacViewModel = TicTacViewModel()
 
     @Test
-    fun `given 2 input names, when createPlayers is called, then update live data for _players with the inputed data`() {
+    fun `given 2 input names, when createPlayers is called, then update live data for _players with the imputed data`() {
 
         //given
         val name1 = "Rafael"

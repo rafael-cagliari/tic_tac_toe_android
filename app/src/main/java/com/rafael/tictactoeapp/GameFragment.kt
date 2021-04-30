@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,12 +35,13 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-      //  binding!!.scoreBoard.text = "oie"
-        Toast.makeText(context, ticTacViewModel.players.value?.get(0)?.name, Toast.LENGTH_SHORT)
-            .show()
 
         ticTacViewModel.players.observe(viewLifecycleOwner, Observer {
             binding!!.apply {
+
+                if(ticTacViewModel.turn=="player1") {scoreBoardPlayer1.setTextColor(resources.getColor(R.color.purple_700)); scoreBoardPlayer2.setTextColor(resources.getColor(R.color.black)) }
+                if(ticTacViewModel.turn=="player2") {scoreBoardPlayer2.setTextColor(resources.getColor(R.color.purple_700)); scoreBoardPlayer1.setTextColor(resources.getColor(R.color.black)) }
+
                 scoreBoardPlayer1.text = ticTacViewModel.players.value?.get(0)?.name
                 scoreBoardScores.text = " ${ticTacViewModel.players.value?.get(0)?.score}  X  ${
                     ticTacViewModel.players.value?.get(1)?.score
@@ -53,6 +53,14 @@ class GameFragment : Fragment() {
                 ) clearCells()
             }
         })
+
+        binding?.resetButton?.setOnClickListener {
+            ticTacViewModel.resetGameButton()
+        }
+
+        binding?.stopButton?.setOnClickListener {
+            ticTacViewModel.stopGame()
+        }
 
         binding?.a1?.setOnClickListener {
             if (binding!!.a1.text == "") {

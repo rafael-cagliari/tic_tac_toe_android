@@ -9,6 +9,7 @@ import com.rafael.tictactoeapp.model.Player
 class TicTacViewModel : ViewModel() {
 
     var turn = "player1"
+    private var first_turn = "player1"
 
     private val _players = MutableLiveData<List<Player>>()
     val players: LiveData<List<Player>> get() = _players
@@ -26,9 +27,10 @@ class TicTacViewModel : ViewModel() {
         return result
     }
 
-    private fun switchTurn() {
+    fun switchTurn() {
         if (turn == "player1") turn = "player2"
         else if (turn == "player2") turn = "player1"
+        _players.notifyObserver()
     }
 
     fun addToMovesList(cell: String) {
@@ -78,10 +80,31 @@ class TicTacViewModel : ViewModel() {
     }
 
     private fun resetGame() {
-        switchTurn()
+        switchFirstTurn()
         _players.value!![0].moves.clear()
         _players.value!![1].moves.clear()
         _players.notifyObserver()
     }
 
+    fun resetGameButton(){
+        _players.value!![0].moves.clear()
+        _players.value!![1].moves.clear()
+        turn = first_turn
+        _players.notifyObserver()
+    }
+
+    private fun switchFirstTurn(){
+        if (first_turn == "player1") first_turn = "player2"
+        else if (first_turn == "player2") first_turn = "player1"
+        turn = first_turn
+    }
+
+    fun stopGame(){
+        _players.value!![0].score = 0
+        _players.value!![1].score = 0
+        resetGame()
+        first_turn = "player1"
+        turn = first_turn
+        _players.notifyObserver()
+    }
 }
