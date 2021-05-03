@@ -1,5 +1,7 @@
 package com.rafael.tictactoeapp
 
+import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,9 +32,9 @@ class GameFragment : Fragment() {
         binding = fragmentBinding
         ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
         return fragmentBinding.root
-
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -74,6 +76,7 @@ class GameFragment : Fragment() {
         //cell buttons logic; when clicked: adds cell's coordinate into player's move list, changes into X or O depending on turn variable, check if player won
         binding?.a1?.setOnClickListener {
             if (binding!!.a1.text == "") {
+                mp.start()
                 ticTacViewModel.addToMovesList("a1")
                 binding!!.a1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -82,6 +85,7 @@ class GameFragment : Fragment() {
         }
         binding?.a2?.setOnClickListener {
             if (binding!!.a2.text == "") {
+                mp.start()
                 ticTacViewModel.addToMovesList("a2")
                 binding!!.a2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -89,6 +93,7 @@ class GameFragment : Fragment() {
         }
         binding?.a3?.setOnClickListener {
             if (binding!!.a3.text == "") {
+                mp?.start()
                 ticTacViewModel.addToMovesList("a3")
                 binding!!.a3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -96,6 +101,7 @@ class GameFragment : Fragment() {
         }
         binding?.b1?.setOnClickListener {
             if (binding!!.b1.text == "") {
+                mp?.start()
                 ticTacViewModel.addToMovesList("b1");
                 binding!!.b1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -103,6 +109,7 @@ class GameFragment : Fragment() {
         }
         binding?.b2?.setOnClickListener {
             if (binding!!.b2.text == "") {
+                mp?.start()
                 ticTacViewModel.addToMovesList("b2");
                 binding!!.b2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -110,6 +117,7 @@ class GameFragment : Fragment() {
         }
         binding?.b3?.setOnClickListener {
             if (binding!!.b3.text == "") {
+                mp?.start()
                 ticTacViewModel.addToMovesList("b3");
                 binding!!.b3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -117,6 +125,7 @@ class GameFragment : Fragment() {
         }
         binding?.c1?.setOnClickListener {
             if (binding!!.c1.text == "") {
+                mp?.start()
                 ticTacViewModel.addToMovesList("c1");
                 binding!!.c1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -124,6 +133,7 @@ class GameFragment : Fragment() {
         }
         binding?.c2?.setOnClickListener {
             if (binding!!.c2.text == "") {
+                mp?.start()
                 ticTacViewModel.addToMovesList("c2");
                 binding!!.c2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -131,6 +141,7 @@ class GameFragment : Fragment() {
         }
         binding?.c3?.setOnClickListener {
             if (binding!!.c3.text == "") {
+                mp?.start()
                 ticTacViewModel.addToMovesList("c3");
                 binding!!.c3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -150,4 +161,5 @@ class GameFragment : Fragment() {
         binding?.c2?.text = ""
         binding?.c3?.text = ""
     }
+    var mp: MediaPlayer = MediaPlayer.create(activity, R.raw.click)
 }
