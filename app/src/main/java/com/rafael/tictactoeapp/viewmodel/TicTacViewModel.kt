@@ -8,6 +8,8 @@ import com.rafael.tictactoeapp.model.Player
 
 class TicTacViewModel : ViewModel() {
 
+    var game_message = ""
+
     var turn = "player1"
 
     //every match is gonna start with a different player from the last, this variable guarantees that when a match is reseted, it still starts with the same player
@@ -71,16 +73,17 @@ class TicTacViewModel : ViewModel() {
             || sorted.containsAll(sequence7) || sorted.containsAll(sequence8)
         ) {
             updateScore()
-        } else if (_players.value!![0].moves.size + _players.value!![1].moves.size == 9) resetGame()
-        else switchTurn()
+        } else if (_players.value!![0].moves.size + _players.value!![1].moves.size == 9) {
+            game_message = "It's a draw!"; resetGame()
+        } else switchTurn()
     }
 
     private fun updateScore() {
 
         if (turn == "player1") _players.value!![0].score = _players.value!![0].score + 1
         else _players.value!![1].score = _players.value!![1].score + 1
+        updateGameMessage()
         _players.notifyObserver()
-
         resetGame()
 
     }
@@ -99,27 +102,45 @@ class TicTacViewModel : ViewModel() {
     }
 
     //called when user presses the "reset button" on game screen, resetting the match, but still starting a new match with the same first player
-    fun resetGameButton(){
+    fun resetGameButton() {
         _players.value!![0].moves.clear()
         _players.value!![1].moves.clear()
+        clearMessage()
         turn = first_turn
         _players.notifyObserver()
     }
 
     //makes every match start with a different player as first player from the last
-    private fun switchFirstTurn(){
+    private fun switchFirstTurn() {
         if (first_turn == "player1") first_turn = "player2"
         else if (first_turn == "player2") first_turn = "player1"
         turn = first_turn
     }
 
     //resets the game and score; first player becomes player 1 by default
-    fun stopGame(){
+    fun stopGame() {
         _players.value!![0].score = 0
         _players.value!![1].score = 0
+        clearMessage()
         resetGame()
         first_turn = "player1"
         turn = first_turn
         _players.notifyObserver()
+    }
+
+
+    //updates the variable game_message, which is observed on the game fragment
+    private fun updateGameMessage() {
+        game_message = if (turn == "player1") "${_players.value!![0].name} Wins!"
+        else "${_players.value!![1].name} Wins!"
+    }
+
+    //after a match ends, the result is printed on the screen, this function is called whenever a cell is pressed next
+    //clearing the message and starting a new game
+    fun clearMessage() {
+        if (game_message != "") {
+            game_message = ""
+            _players.notifyObserver()
+        }
     }
 }

@@ -12,6 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.rafael.tictactoeapp.databinding.GameFragmentBinding
 import com.rafael.tictactoeapp.viewmodel.TicTacViewModel
 
+enum class Sound {
+    ON, OFF
+}
+
+var sound: Sound = Sound.ON
 
 class GameFragment : Fragment() {
 
@@ -26,7 +31,7 @@ class GameFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val fragmentBinding = GameFragmentBinding.inflate(inflater, container, false)
         binding = fragmentBinding
@@ -38,13 +43,28 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val mp = MediaPlayer.create(activity?.baseContext, R.raw.click);
         //ViewModel observer
+
+
         ticTacViewModel.players.observe(viewLifecycleOwner, Observer {
             binding!!.apply {
 
+
+                //updates with a message everytime a player wins or there is a draw
+                binding?.gameMessage?.text = ticTacViewModel.game_message
+
                 //make the player's name change color during their turn
-                if(ticTacViewModel.turn=="player1") {scoreBoardPlayer1.setTextColor(resources.getColor(R.color.purple_700)); scoreBoardPlayer2.setTextColor(resources.getColor(R.color.black)) }
-                if(ticTacViewModel.turn=="player2") {scoreBoardPlayer2.setTextColor(resources.getColor(R.color.purple_700)); scoreBoardPlayer1.setTextColor(resources.getColor(R.color.black)) }
+                if (ticTacViewModel.turn == "player1") {
+                    scoreBoardPlayer1.setTextColor(resources.getColor(R.color.purple_700)); scoreBoardPlayer2.setTextColor(
+                        resources.getColor(R.color.black)
+                    )
+                }
+                if (ticTacViewModel.turn == "player2") {
+                    scoreBoardPlayer2.setTextColor(resources.getColor(R.color.purple_700)); scoreBoardPlayer1.setTextColor(
+                        resources.getColor(R.color.black)
+                    )
+                }
 
                 //shows names and score; updates score
                 scoreBoardPlayer1.text = ticTacViewModel.players.value?.get(0)?.name
@@ -72,11 +92,16 @@ class GameFragment : Fragment() {
             ticTacViewModel.stopGame()
         }
 
+        //sound button
+        binding?.volumeButton?.setOnClickListener {
+            soundSwitch()
+        }
 
         //cell buttons logic; when clicked: adds cell's coordinate into player's move list, changes into X or O depending on turn variable, check if player won
         binding?.a1?.setOnClickListener {
             if (binding!!.a1.text == "") {
-                mp.start()
+                if (sound == Sound.ON) mp.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("a1")
                 binding!!.a1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -85,7 +110,8 @@ class GameFragment : Fragment() {
         }
         binding?.a2?.setOnClickListener {
             if (binding!!.a2.text == "") {
-                mp.start()
+                if (sound == Sound.ON) mp?.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("a2")
                 binding!!.a2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -93,7 +119,8 @@ class GameFragment : Fragment() {
         }
         binding?.a3?.setOnClickListener {
             if (binding!!.a3.text == "") {
-                mp?.start()
+                if (sound == Sound.ON) mp?.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("a3")
                 binding!!.a3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -101,7 +128,8 @@ class GameFragment : Fragment() {
         }
         binding?.b1?.setOnClickListener {
             if (binding!!.b1.text == "") {
-                mp?.start()
+                if (sound == Sound.ON) mp?.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("b1");
                 binding!!.b1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -109,7 +137,8 @@ class GameFragment : Fragment() {
         }
         binding?.b2?.setOnClickListener {
             if (binding!!.b2.text == "") {
-                mp?.start()
+                if (sound == Sound.ON) mp?.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("b2");
                 binding!!.b2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -117,7 +146,8 @@ class GameFragment : Fragment() {
         }
         binding?.b3?.setOnClickListener {
             if (binding!!.b3.text == "") {
-                mp?.start()
+                if (sound == Sound.ON) mp?.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("b3");
                 binding!!.b3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -125,7 +155,8 @@ class GameFragment : Fragment() {
         }
         binding?.c1?.setOnClickListener {
             if (binding!!.c1.text == "") {
-                mp?.start()
+                if (sound == Sound.ON) mp?.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("c1");
                 binding!!.c1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -133,7 +164,8 @@ class GameFragment : Fragment() {
         }
         binding?.c2?.setOnClickListener {
             if (binding!!.c2.text == "") {
-                mp?.start()
+                if (sound == Sound.ON) mp?.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("c2");
                 binding!!.c2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -141,7 +173,8 @@ class GameFragment : Fragment() {
         }
         binding?.c3?.setOnClickListener {
             if (binding!!.c3.text == "") {
-                mp?.start()
+                if (sound == Sound.ON) mp?.start()
+                ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("c3");
                 binding!!.c3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
@@ -150,7 +183,7 @@ class GameFragment : Fragment() {
     }
 
     //clears all the cells, making the grid empty for starting a new match
-    fun clearCells() {
+    private fun clearCells() {
         binding?.a1?.text = ""
         binding?.a2?.text = ""
         binding?.a3?.text = ""
@@ -161,5 +194,17 @@ class GameFragment : Fragment() {
         binding?.c2?.text = ""
         binding?.c3?.text = ""
     }
-    var mp: MediaPlayer = MediaPlayer.create(activity, R.raw.click)
+
+
+    private fun soundSwitch() {
+        sound = when (sound) {
+            Sound.ON -> {
+                binding?.volumeButton?.setImageResource(R.drawable.ic_baseline_volume_off); Sound.OFF
+            }
+            Sound.OFF -> {
+                binding?.volumeButton?.setImageResource(R.drawable.ic_baseline_volume); Sound.ON
+            }
+        }
+    }
+
 }
