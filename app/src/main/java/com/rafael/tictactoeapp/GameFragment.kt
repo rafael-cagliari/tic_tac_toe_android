@@ -3,6 +3,7 @@ package com.rafael.tictactoeapp
 import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,29 @@ class GameFragment : Fragment() {
 
         val mp = MediaPlayer.create(activity?.baseContext, R.raw.click);
         //ViewModel observer
+
+        fun computerPlay() {
+            if (ticTacViewModel.game_mode == "vs AI" && ticTacViewModel.turn == "player2"){
+            val coordinates = listOf("a1", "a2", "a3", "b1", "b2", "b3", "c1", "c2", "c3")
+            val availableCoordinates = coordinates.minus(ticTacViewModel.players.value!![0].moves)
+                .minus(ticTacViewModel.players.value!![1].moves)
+            val selectedCell = availableCoordinates.random()
+            when (selectedCell) {
+                "a1" -> binding?.a1?.text = ticTacViewModel.setCell()
+                "a2" -> binding?.a2?.text = ticTacViewModel.setCell()
+                "a3" ->  binding?.a3?.text = ticTacViewModel.setCell()
+                "b1" -> binding?.b1?.text = ticTacViewModel.setCell()
+                "b2" -> binding?.b2?.text = ticTacViewModel.setCell()
+                "b3" -> binding?.b3?.text = ticTacViewModel.setCell()
+                "c1" ->  binding?.c1?.text = ticTacViewModel.setCell()
+                "c2" ->  binding?.c2?.text = ticTacViewModel.setCell()
+                "c3" -> binding?.c3?.text = ticTacViewModel.setCell()
+            }
+            if (sound == Sound.ON) mp?.start()
+            ticTacViewModel.clearMessage()
+            ticTacViewModel.addToMovesList(selectedCell);
+            ticTacViewModel.checkWin()
+        }}
 
 
         ticTacViewModel.players.observe(viewLifecycleOwner, Observer {
@@ -99,15 +123,20 @@ class GameFragment : Fragment() {
 
         //cell buttons logic; when clicked: adds cell's coordinate into player's move list, changes into X or O depending on turn variable, check if player won
         binding?.a1?.setOnClickListener {
+
             if (binding!!.a1.text == "") {
                 if (sound == Sound.ON) mp.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("a1")
                 binding!!.a1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
-            };
-
+            }
+            val handler = Handler()
+            handler.postDelayed({
+                computerPlay()
+            }, 850)
         }
+
         binding?.a2?.setOnClickListener {
             if (binding!!.a2.text == "") {
                 if (sound == Sound.ON) mp?.start()
@@ -116,16 +145,26 @@ class GameFragment : Fragment() {
                 binding!!.a2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
+            val handler = Handler()
+            handler.postDelayed({
+                computerPlay()
+            }, 850)
         }
+
         binding?.a3?.setOnClickListener {
-            if (binding!!.a3.text == "") {
+             if (binding!!.a3.text == "") {
                 if (sound == Sound.ON) mp?.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("a3")
                 binding!!.a3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
-            };
+            }
+            val handler = Handler()
+            handler.postDelayed({
+                computerPlay()
+            }, 850)
         }
+
         binding?.b1?.setOnClickListener {
             if (binding!!.b1.text == "") {
                 if (sound == Sound.ON) mp?.start()
@@ -134,7 +173,12 @@ class GameFragment : Fragment() {
                 binding!!.b1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
+            val handler = Handler()
+            handler.postDelayed({
+                computerPlay()
+            }, 850)
         }
+
         binding?.b2?.setOnClickListener {
             if (binding!!.b2.text == "") {
                 if (sound == Sound.ON) mp?.start()
@@ -143,16 +187,22 @@ class GameFragment : Fragment() {
                 binding!!.b2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
+            val handler = Handler()
+            handler.postDelayed({
+                computerPlay()
+            }, 850)
         }
         binding?.b3?.setOnClickListener {
-            if (binding!!.b3.text == "") {
+           if (binding!!.b3.text == "") {
                 if (sound == Sound.ON) mp?.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("b3");
                 binding!!.b3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
+            computerPlay()
         }
+
         binding?.c1?.setOnClickListener {
             if (binding!!.c1.text == "") {
                 if (sound == Sound.ON) mp?.start()
@@ -161,26 +211,41 @@ class GameFragment : Fragment() {
                 binding!!.c1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
+            val handler = Handler()
+            handler.postDelayed({
+                computerPlay()
+            }, 850)
         }
         binding?.c2?.setOnClickListener {
-            if (binding!!.c2.text == "") {
+             if (binding!!.c2.text == "") {
                 if (sound == Sound.ON) mp?.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("c2");
                 binding!!.c2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
+            val handler = Handler()
+            handler.postDelayed({
+                computerPlay()
+            }, 850)
         }
+
         binding?.c3?.setOnClickListener {
-            if (binding!!.c3.text == "") {
+             if (binding!!.c3.text == "") {
                 if (sound == Sound.ON) mp?.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("c3");
                 binding!!.c3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
+            val handler = Handler()
+            handler.postDelayed({
+                computerPlay()
+            }, 850)
         }
+
     }
+
 
     //clears all the cells, making the grid empty for starting a new match
     private fun clearCells() {

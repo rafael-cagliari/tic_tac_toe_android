@@ -22,10 +22,21 @@
         <action
             android:id="@+id/action_gameModeSelection_to_playerNameFragment"
             app:destination="@id/playerNameFragment" />
+        <action
+            android:id="@+id/action_gameModeSelection_to_playerNameVsAiFragment2"
+            app:destination="@id/playerNameVsAiFragment2" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.rafael.tictactoeapp.GameFragment"
         android:label="game_fragment"
         tools:layout="@layout/game_fragment" />
+    <fragment
+        android:id="@+id/playerNameVsAiFragment2"
+        android:name="com.rafael.tictactoeapp.PlayerNameVsAiFragment"
+        android:label="PlayerNameVsAiFragment" >
+        <action
+            android:id="@+id/action_playerNameVsAiFragment2_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
 </navigation>

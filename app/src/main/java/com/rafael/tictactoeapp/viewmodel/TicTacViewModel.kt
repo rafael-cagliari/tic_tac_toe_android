@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rafael.tictactoeapp.model.Player
 
-
 class TicTacViewModel : ViewModel() {
+
+    var game_mode = "two players"
 
     var game_message = ""
 
@@ -32,6 +33,7 @@ class TicTacViewModel : ViewModel() {
         var result: String = ""
         if (turn == "player1") result = "X"
         else if (turn == "player2") result = "O"
+        _players.notifyObserver()
         return result
     }
 

@@ -25,6 +25,11 @@ class GameModeSelectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //selects player vs player
         binding?.buttonPvp?.setOnClickListener { findNavController().navigate(GameModeSelectionFragmentDirections.actionGameModeSelectionToPlayerNameFragment()) }
+
+        //selects player vs. AI
+        binding?.buttonCPU?.setOnClickListener { findNavController().navigate(GameModeSelectionFragmentDirections.actionGameModeSelectionToPlayerNameVsAiFragment2()) }
     }
     }
