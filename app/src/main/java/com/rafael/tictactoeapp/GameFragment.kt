@@ -45,33 +45,45 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val mp = MediaPlayer.create(activity?.baseContext, R.raw.click);
-        //ViewModel observer
 
+
+        //this function is called on VS AI mode (when the game_mode variable is set to "vs AI")
+        //after player one plays, selecting a random cell
         fun computerPlay() {
-            if (ticTacViewModel.game_mode == "vs AI" && ticTacViewModel.turn == "player2"){
-            val coordinates = listOf("a1", "a2", "a3", "b1", "b2", "b3", "c1", "c2", "c3")
-            val availableCoordinates = coordinates.minus(ticTacViewModel.players.value!![0].moves)
-                .minus(ticTacViewModel.players.value!![1].moves)
-            val selectedCell = availableCoordinates.random()
-            when (selectedCell) {
-                "a1" -> binding?.a1?.text = ticTacViewModel.setCell()
-                "a2" -> binding?.a2?.text = ticTacViewModel.setCell()
-                "a3" ->  binding?.a3?.text = ticTacViewModel.setCell()
-                "b1" -> binding?.b1?.text = ticTacViewModel.setCell()
-                "b2" -> binding?.b2?.text = ticTacViewModel.setCell()
-                "b3" -> binding?.b3?.text = ticTacViewModel.setCell()
-                "c1" ->  binding?.c1?.text = ticTacViewModel.setCell()
-                "c2" ->  binding?.c2?.text = ticTacViewModel.setCell()
-                "c3" -> binding?.c3?.text = ticTacViewModel.setCell()
-            }
-            if (sound == Sound.ON) mp?.start()
-            ticTacViewModel.clearMessage()
-            ticTacViewModel.addToMovesList(selectedCell);
-            ticTacViewModel.checkWin()
-        }}
+            val handler = Handler()
+            handler.postDelayed({
+                if (ticTacViewModel.game_mode == "vs AI" && ticTacViewModel.turn == "player2") {
+                    val coordinates = listOf("a1", "a2", "a3", "b1", "b2", "b3", "c1", "c2", "c3")
+                    val availableCoordinates =
+                        coordinates.minus(ticTacViewModel.players.value!![0].moves)
+                            .minus(ticTacViewModel.players.value!![1].moves)
+                    val selectedCell = availableCoordinates.random()
+                    when (selectedCell) {
+                        "a1" -> binding?.a1?.text = ticTacViewModel.setCell()
+                        "a2" -> binding?.a2?.text = ticTacViewModel.setCell()
+                        "a3" -> binding?.a3?.text = ticTacViewModel.setCell()
+                        "b1" -> binding?.b1?.text = ticTacViewModel.setCell()
+                        "b2" -> binding?.b2?.text = ticTacViewModel.setCell()
+                        "b3" -> binding?.b3?.text = ticTacViewModel.setCell()
+                        "c1" -> binding?.c1?.text = ticTacViewModel.setCell()
+                        "c2" -> binding?.c2?.text = ticTacViewModel.setCell()
+                        "c3" -> binding?.c3?.text = ticTacViewModel.setCell()
+                    }
+                    if (sound == Sound.ON) mp?.start()
+                    ticTacViewModel.addToMovesList(selectedCell);
 
+                    //created this line for clearing the message for the AI, since calling the clearMessage()
+                    //function calls notifyObserver, causing bugs
+                    ticTacViewModel.checkWin()
+                    if (ticTacViewModel.game_message != "") ticTacViewModel.game_message = ""
+                }},500)
+        }
 
+        //ViewModel observer
         ticTacViewModel.players.observe(viewLifecycleOwner, Observer {
+
+            computerPlay()
+
             binding!!.apply {
 
 
@@ -101,8 +113,9 @@ class GameFragment : Fragment() {
                 if (ticTacViewModel.players.value?.get(0)?.moves?.size == 0 && ticTacViewModel.players.value?.get(
                         1
                     )?.moves?.size == 0
-                ) clearCells()
+                ) {clearCells()}
             }
+
         })
 
 
@@ -131,10 +144,6 @@ class GameFragment : Fragment() {
                 binding!!.a1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            val handler = Handler()
-            handler.postDelayed({
-                computerPlay()
-            }, 850)
         }
 
         binding?.a2?.setOnClickListener {
@@ -145,24 +154,16 @@ class GameFragment : Fragment() {
                 binding!!.a2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            val handler = Handler()
-            handler.postDelayed({
-                computerPlay()
-            }, 850)
         }
 
         binding?.a3?.setOnClickListener {
-             if (binding!!.a3.text == "") {
+            if (binding!!.a3.text == "") {
                 if (sound == Sound.ON) mp?.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("a3")
                 binding!!.a3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            val handler = Handler()
-            handler.postDelayed({
-                computerPlay()
-            }, 850)
         }
 
         binding?.b1?.setOnClickListener {
@@ -173,10 +174,6 @@ class GameFragment : Fragment() {
                 binding!!.b1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            val handler = Handler()
-            handler.postDelayed({
-                computerPlay()
-            }, 850)
         }
 
         binding?.b2?.setOnClickListener {
@@ -187,20 +184,15 @@ class GameFragment : Fragment() {
                 binding!!.b2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            val handler = Handler()
-            handler.postDelayed({
-                computerPlay()
-            }, 850)
         }
         binding?.b3?.setOnClickListener {
-           if (binding!!.b3.text == "") {
+            if (binding!!.b3.text == "") {
                 if (sound == Sound.ON) mp?.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("b3");
                 binding!!.b3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            computerPlay()
         }
 
         binding?.c1?.setOnClickListener {
@@ -211,37 +203,25 @@ class GameFragment : Fragment() {
                 binding!!.c1.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            val handler = Handler()
-            handler.postDelayed({
-                computerPlay()
-            }, 850)
         }
         binding?.c2?.setOnClickListener {
-             if (binding!!.c2.text == "") {
+            if (binding!!.c2.text == "") {
                 if (sound == Sound.ON) mp?.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("c2");
                 binding!!.c2.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            val handler = Handler()
-            handler.postDelayed({
-                computerPlay()
-            }, 850)
         }
 
         binding?.c3?.setOnClickListener {
-             if (binding!!.c3.text == "") {
+            if (binding!!.c3.text == "") {
                 if (sound == Sound.ON) mp?.start()
                 ticTacViewModel.clearMessage()
                 ticTacViewModel.addToMovesList("c3");
                 binding!!.c3.text = ticTacViewModel.setCell()
                 ticTacViewModel.checkWin()
             }
-            val handler = Handler()
-            handler.postDelayed({
-                computerPlay()
-            }, 850)
         }
 
     }
@@ -273,3 +253,5 @@ class GameFragment : Fragment() {
     }
 
 }
+
+
