@@ -35,6 +35,7 @@ class PlayerNameFragment : Fragment() {
         val ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
         //once the start button is pressed, player 1 and player 2 are created, receiving the names typed on the boxes
         binding?.button?.setOnClickListener {
+            ticTacViewModel.game_mode="two players"
             if(binding?.player1Name?.text.toString()!= "" && binding?.player2Name?.text.toString()!=""){
             ticTacViewModel.createPlayers(binding!!.player1Name.text.toString(), binding!!.player2Name.text.toString())
         findNavController().navigate(PlayerNameFragmentDirections.actionPlayerNameFragmentToGameFragment())

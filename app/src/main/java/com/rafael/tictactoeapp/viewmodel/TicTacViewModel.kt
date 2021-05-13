@@ -1,11 +1,36 @@
 package com.rafael.tictactoeapp.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.rafael.tictactoeapp.model.Match
 import com.rafael.tictactoeapp.model.Player
+import com.rafael.tictactoeapp.roomdb.MatchDatabase
+import com.rafael.tictactoeapp.roomdb.repository.MatchRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class TicTacViewModel : ViewModel() {
+class TicTacViewModel(application: Application) : AndroidViewModel(application) {
+
+    //initiates the database
+    val readAllData: LiveData<List<Match>>
+    private val repository : MatchRepository
+
+    init{
+        //Calls database + the match dao abstract function inside the matchdatabase class
+        //from where "readAllData" gets called
+        val matchDao = MatchDatabase.getDatabase(application).matchDao()
+        repository = MatchRepository(matchDao)
+        readAllData = repository.readAllData
+    }
+
+    //adds a match to the database
+    fun addMatch(match:Match){
+        viewModelScope.launch(Dispatchers.IO){ repository.addMatch(match)}
+    }
+
 
     var game_mode = "two players"
 

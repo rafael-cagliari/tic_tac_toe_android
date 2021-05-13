@@ -7,10 +7,12 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rafael.tictactoeapp.databinding.GameFragmentBinding
+import com.rafael.tictactoeapp.model.Match
 import com.rafael.tictactoeapp.viewmodel.TicTacViewModel
 
 enum class Sound {
@@ -224,6 +226,22 @@ class GameFragment : Fragment() {
             }
         }
 
+        binding?.generateDB?.setOnClickListener {
+            insertDataToDatabase()
+        }
+    }
+
+
+    private fun insertDataToDatabase() {
+        val player1Name = ticTacViewModel.players.value!![0].name
+        val player1Score = ticTacViewModel.players.value!![0].score
+        val player2Name = ticTacViewModel.players.value!![1].name
+        val player2Score = ticTacViewModel.players.value!![1].score
+        val timeDate = "12/05/2021 20:04"
+
+        val match = Match(0, player1Name, Integer.parseInt(player1Score.toString()), player2Name, Integer.parseInt(player2Score.toString()),timeDate)
+        ticTacViewModel.addMatch(match)
+        Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG).show()
     }
 
 
