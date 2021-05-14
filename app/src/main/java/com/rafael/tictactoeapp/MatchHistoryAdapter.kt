@@ -3,25 +3,27 @@ package com.rafael.tictactoeapp
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rafael.tictactoeapp.model.Match
 
-class MatchHistoryAdapter(val matchList: List<Match>):RecyclerView.Adapter<MatchHistoryAdapter.MatchViewHolder>() {
+class MatchHistoryAdapter:RecyclerView.Adapter<MatchHistoryAdapter.MatchViewHolder>() {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): MatchViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.match_history_item, parent, false)
-        return MatchViewHolder(adapterLayout)
+    private var matchList = emptyList<Match>()
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
+        return MatchViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.match_history_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: MatchHistoryAdapter.MatchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
         val matchItem = matchList[position]
-        holder.Player1Name.text = matchItem.player1Name
-        holder.Player1Score.text=matchItem.player2Name
+        holder.player1Name.text=matchItem.player1Name
+        holder.player2Name.text=matchItem.player2Name
+        holder.player1Score.text=matchItem.player1Score.toString()
+        holder.player2Score.text=matchItem.player2Score.toString()
+        holder.id.text=matchItem.id.toString()
     }
 
     override fun getItemCount(): Int {
@@ -29,8 +31,16 @@ class MatchHistoryAdapter(val matchList: List<Match>):RecyclerView.Adapter<Match
     }
 
     class MatchViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val Player1Name: TextView = view.findViewById(R.id.player1Name)
-        val Player1Score: TextView = view.findViewById(R.id.player1Score)
-
+        val id: TextView = view.findViewById(R.id.id)
+        val player1Name: TextView = view.findViewById(R.id.player1Name)
+        val player2Name: TextView = view.findViewById(R.id.player2Name)
+        val player1Score: TextView = view.findViewById(R.id.player1Score)
+        val player2Score: TextView = view.findViewById(R.id.player2Score)
     }
+
+    fun setData(match: List<Match>){
+        this.matchList = match
+        notifyDataSetChanged()
+    }
+
 }

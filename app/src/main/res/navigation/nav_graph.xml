@@ -45,7 +45,6 @@
     </fragment>
     <fragment
         android:id="@+id/matchHistoryFragment"
-        android:name="com.rafael.tictactoeapp.MatchHistoryFragment"
-        android:label="match_history_fragment"
-        tools:layout="@layout/match_history_fragment" />
+        android:name="MatchHistoryFragment"
+        android:label="MatchHistoryFragment" />
 </navigation>
