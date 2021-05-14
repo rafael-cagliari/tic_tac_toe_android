@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.rafael.tictactoeapp.databinding.GameFragmentBinding
 import com.rafael.tictactoeapp.model.Match
 import com.rafael.tictactoeapp.viewmodel.TicTacViewModel
@@ -39,6 +38,7 @@ class GameFragment : Fragment() {
         val fragmentBinding = GameFragmentBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
+        setHasOptionsMenu(true)
         return fragmentBinding.root
     }
 
@@ -231,6 +231,18 @@ class GameFragment : Fragment() {
         }
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.match_history, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId==R.id.menu_match_history){
+           findNavController().navigate(R.id.action_gameFragment_to_matchHistoryFragment)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun insertDataToDatabase() {
         val player1Name = ticTacViewModel.players.value!![0].name

@@ -30,7 +30,11 @@
         android:id="@+id/gameFragment"
         android:name="com.rafael.tictactoeapp.GameFragment"
         android:label="game_fragment"
-        tools:layout="@layout/game_fragment" />
+        tools:layout="@layout/game_fragment" >
+        <action
+            android:id="@+id/action_gameFragment_to_matchHistoryFragment"
+            app:destination="@id/matchHistoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/playerNameVsAiFragment2"
         android:name="com.rafael.tictactoeapp.PlayerNameVsAiFragment"
@@ -39,4 +43,9 @@
             android:id="@+id/action_playerNameVsAiFragment2_to_gameFragment"
             app:destination="@id/gameFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/matchHistoryFragment"
+        android:name="com.rafael.tictactoeapp.MatchHistoryFragment"
+        android:label="match_history_fragment"
+        tools:layout="@layout/match_history_fragment" />
 </navigation>
