@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.rafael.tictactoeapp.model.Match
 import com.rafael.tictactoeapp.model.Player
+import com.rafael.tictactoeapp.roomdb.MatchDao
 import com.rafael.tictactoeapp.roomdb.MatchDatabase
 import com.rafael.tictactoeapp.roomdb.repository.MatchRepository
 import kotlinx.coroutines.Dispatchers
@@ -19,15 +20,19 @@ import java.time.format.DateTimeFormatter
 class TicTacViewModel(application: Application) : AndroidViewModel(application) {
 
     //initiates the database
-    val readAllData: LiveData<List<Match>>
-    private val repository: MatchRepository
+    var readAllData : LiveData<MutableList<Match>>
+    val deleteResult = MutableLiveData<Int>()
     private var currentId: Long = -1
+    lateinit var repository: MatchRepository
 
     init {
-        //Calls database + the match dao abstract function inside the matchdatabase class
-        //from where "readAllData" gets called
-        val matchDao = MatchDatabase.getDatabase(application).matchDao()
+        val matchDao: MatchDao = MatchDatabase.getDatabase(application).matchDao()
         repository = MatchRepository(matchDao)
+        readAllData = repository.readAllData
+    }
+
+    fun requestData() {
+        readAllData.value?.clear()
         readAllData = repository.readAllData
     }
 
@@ -38,9 +43,15 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun updateMatch(playerScore1: Int, playerScore2: Int, timeDate:String, id: Long) {
+    fun updateMatch(playerScore1: Int, playerScore2: Int, timeDate: String, id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateMatch(playerScore1, playerScore2, timeDate, id)
+        }
+    }
+
+    fun deleteMatch(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteResult.postValue(repository.deleteMatch(id))
         }
     }
 
@@ -199,7 +210,8 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
         val formatted = current.format(formatter)
         val timeDate = formatted.toString()
 
-        val canInsert = (player1Score == 0 && player2Score == 1) || (player1Score == 1 && player2Score == 0)
+        val canInsert =
+            (player1Score == 0 && player2Score == 1) || (player1Score == 1 && player2Score == 0)
 
         if (canInsert && player1Name != null && player2Name != null) {
             val match = Match(
@@ -208,7 +220,12 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
             )
             addMatch(match)
         } else {
-             updateMatch(playerScore1 = player1Score, playerScore2 = player2Score, timeDate = timeDate  ,id = currentId)
+            updateMatch(
+                playerScore1 = player1Score,
+                playerScore2 = player2Score,
+                timeDate = timeDate,
+                id = currentId
+            )
         }
     }
 }
