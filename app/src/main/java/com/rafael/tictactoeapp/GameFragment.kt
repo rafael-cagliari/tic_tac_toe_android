@@ -227,7 +227,7 @@ class GameFragment : Fragment() {
         }
 
         binding?.generateDB?.setOnClickListener {
-            insertDataToDatabase()
+            ticTacViewModel.insertDataToDatabase()
         }
     }
 
@@ -243,19 +243,6 @@ class GameFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    private fun insertDataToDatabase() {
-        val player1Name = ticTacViewModel.players.value!![0].name
-        val player1Score = ticTacViewModel.players.value!![0].score
-        val player2Name = ticTacViewModel.players.value!![1].name
-        val player2Score = ticTacViewModel.players.value!![1].score
-        val timeDate = "12/05/2021 20:04"
-
-        val match = Match(0, player1Name, Integer.parseInt(player1Score.toString()), player2Name, Integer.parseInt(player2Score.toString()),timeDate)
-        ticTacViewModel.addMatch(match)
-        Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG).show()
-    }
-
 
     //clears all the cells, making the grid empty for starting a new match
     private fun clearCells() {

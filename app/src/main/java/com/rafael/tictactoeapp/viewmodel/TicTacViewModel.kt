@@ -1,6 +1,8 @@
 package com.rafael.tictactoeapp.viewmodel
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,14 +13,17 @@ import com.rafael.tictactoeapp.roomdb.MatchDatabase
 import com.rafael.tictactoeapp.roomdb.repository.MatchRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class TicTacViewModel(application: Application) : AndroidViewModel(application) {
 
     //initiates the database
     val readAllData: LiveData<List<Match>>
-    private val repository : MatchRepository
+    private val repository: MatchRepository
+    private var currentId: Long = -1
 
-    init{
+    init {
         //Calls database + the match dao abstract function inside the matchdatabase class
         //from where "readAllData" gets called
         val matchDao = MatchDatabase.getDatabase(application).matchDao()
@@ -27,8 +32,16 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     //adds a match to the database
-    fun addMatch(match:Match){
-        viewModelScope.launch(Dispatchers.IO){ repository.addMatch(match)}
+    fun addMatch(match: Match) {
+        viewModelScope.launch(Dispatchers.IO) {
+            currentId = repository.addMatch(match)
+        }
+    }
+
+    fun updateMatch(playerScore1: Int, playerScore2: Int, timeDate:String, id: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateMatch(playerScore1, playerScore2, timeDate, id)
+        }
     }
 
 
@@ -76,6 +89,7 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
 
 
     //checks the coordinates added to a player's "moves" property, calling a win in case it matches one of the winning sequences
+    @RequiresApi(Build.VERSION_CODES.O)
     fun checkWin() {
         var moves = _players.value!![0].moves
         if (turn == "player2") moves = _players.value!![1].moves
@@ -105,11 +119,13 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
         } else switchTurn()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateScore() {
 
         if (turn == "player1") _players.value!![0].score = _players.value!![0].score + 1
         else _players.value!![1].score = _players.value!![1].score + 1
         updateGameMessage()
+        insertDataToDatabase()
         _players.notifyObserver()
         resetGame()
 
@@ -168,6 +184,31 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
         if (game_message != "") {
             game_message = ""
             _players.notifyObserver()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun insertDataToDatabase() {
+        val player1Name = players.value?.get(0)?.name
+        val player1Score = players.value?.get(0)?.score ?: 0
+        val player2Name = players.value?.get(1)?.name
+        val player2Score = players.value?.get(1)?.score ?: 0
+
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val formatted = current.format(formatter)
+        val timeDate = formatted.toString()
+
+        val canInsert = (player1Score == 0 && player2Score == 1) || (player1Score == 1 && player2Score == 0)
+
+        if (canInsert && player1Name != null && player2Name != null) {
+            val match = Match(
+                0, player1Name, Integer.parseInt(player1Score.toString()), player2Name,
+                Integer.parseInt(player2Score.toString()), timeDate
+            )
+            addMatch(match)
+        } else {
+             updateMatch(playerScore1 = player1Score, playerScore2 = player2Score, timeDate = timeDate  ,id = currentId)
         }
     }
 }

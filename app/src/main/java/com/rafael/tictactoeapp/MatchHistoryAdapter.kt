@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rafael.tictactoeapp.model.Match
+import org.w3c.dom.Text
 
 class MatchHistoryAdapter:RecyclerView.Adapter<MatchHistoryAdapter.MatchViewHolder>() {
 
@@ -24,6 +25,7 @@ class MatchHistoryAdapter:RecyclerView.Adapter<MatchHistoryAdapter.MatchViewHold
         holder.player1Score.text=matchItem.player1Score.toString()
         holder.player2Score.text=matchItem.player2Score.toString()
         holder.id.text=matchItem.id.toString()
+        holder.date.text= matchItem.timeDate
     }
 
     override fun getItemCount(): Int {
@@ -36,6 +38,7 @@ class MatchHistoryAdapter:RecyclerView.Adapter<MatchHistoryAdapter.MatchViewHold
         val player2Name: TextView = view.findViewById(R.id.player2Name)
         val player1Score: TextView = view.findViewById(R.id.player1Score)
         val player2Score: TextView = view.findViewById(R.id.player2Score)
+        val date:TextView = view.findViewById(R.id.date)
     }
 
     fun setData(match: List<Match>){
