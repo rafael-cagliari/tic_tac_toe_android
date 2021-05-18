@@ -2,6 +2,7 @@ package com.rafael.tictactoeapp.viewmodel
 
 import android.app.Application
 import android.os.Build
+import android.os.Handler
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -13,6 +14,8 @@ import com.rafael.tictactoeapp.roomdb.MatchDao
 import com.rafael.tictactoeapp.roomdb.MatchDatabase
 import com.rafael.tictactoeapp.roomdb.repository.MatchRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -124,8 +127,8 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
             )
             || sorted.containsAll(sequence7) || sorted.containsAll(sequence8)
         ) {
-            updateScore()
-        } else if (_players.value!![0].moves.size + _players.value!![1].moves.size == 9) {
+          updateScore()}
+        else if (_players.value!![0].moves.size + _players.value!![1].moves.size == 9) {
             game_message = "It's a draw!"; resetGame()
         } else switchTurn()
     }
@@ -137,9 +140,8 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
         else _players.value!![1].score = _players.value!![1].score + 1
         updateGameMessage()
         insertDataToDatabase()
-        _players.notifyObserver()
+       _players.notifyObserver()
         resetGame()
-
     }
 
     //updates _players, so the observer can update the UI
@@ -152,7 +154,8 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
         switchFirstTurn()
         _players.value!![0].moves.clear()
         _players.value!![1].moves.clear()
-        _players.notifyObserver()
+        viewModelScope.launch {  delay(500);
+        _players.notifyObserver()}
     }
 
     //called when user presses the "reset button" on game screen, resetting the match, but still starting a new match with the same first player
