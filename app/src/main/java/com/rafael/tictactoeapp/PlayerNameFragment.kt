@@ -23,6 +23,7 @@ class PlayerNameFragment : Fragment() {
     ): View? {
         val fragmentBinding =PlayerNameFragmentBinding.inflate(inflater, container, false)
         binding = fragmentBinding
+        setHasOptionsMenu(true)
         return fragmentBinding.root
         // Inflate the layout for this fragment
 
@@ -36,6 +37,10 @@ class PlayerNameFragment : Fragment() {
         //once the start button is pressed, player 1 and player 2 are created, receiving the names typed on the boxes
         binding?.button?.setOnClickListener {
             ticTacViewModel.game_mode="two players"
+
+            //added this code so it doesnt glitch when you switch from VS computer mode
+            ticTacViewModel.turn="player1"
+            ticTacViewModel.first_turn="player1"
             if(binding?.player1Name?.text.toString()!= "" && binding?.player2Name?.text.toString()!=""){
             ticTacViewModel.createPlayers(binding!!.player1Name.text.toString(), binding!!.player2Name.text.toString())
         findNavController().navigate(PlayerNameFragmentDirections.actionPlayerNameFragmentToGameFragment())

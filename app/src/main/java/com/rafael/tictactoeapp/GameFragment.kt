@@ -2,10 +2,12 @@ package com.rafael.tictactoeapp
 
 import android.annotation.SuppressLint
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +44,7 @@ class GameFragment : Fragment() {
         return fragmentBinding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -226,9 +229,6 @@ class GameFragment : Fragment() {
             }
         }
 
-        binding?.generateDB?.setOnClickListener {
-            ticTacViewModel.insertDataToDatabase()
-        }
     }
 
 

@@ -64,7 +64,7 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
 
     //every match is gonna start with a different player from the last, this variable guarantees that when a match is reseted, it still starts with the same player
     // player 1 is the fist player by default
-    private var first_turn = "player1"
+    var first_turn = "player1"
 
 
     //player 1 and 2 objects livedata

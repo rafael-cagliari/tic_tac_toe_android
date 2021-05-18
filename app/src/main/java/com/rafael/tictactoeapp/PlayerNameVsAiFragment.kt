@@ -23,6 +23,7 @@ class PlayerNameVsAiFragment : Fragment() {
     ): View? {
         val fragmentBinding = PlayerNameVsAiFragmentBinding.inflate(inflater, container, false)
         binding = fragmentBinding
+        setHasOptionsMenu(true)
         return fragmentBinding.root
         // Inflate the layout for this fragment
 
@@ -36,6 +37,10 @@ class PlayerNameVsAiFragment : Fragment() {
         binding?.button?.setOnClickListener {
                 if(binding?.player1Name?.text.toString()!= ""){
                     ticTacViewModel.game_mode="vs AI"
+
+                    //added this code so it doesnt glitch when you switch from multiplayer mode
+                    ticTacViewModel.turn="player1"
+                    ticTacViewModel.first_turn="player1"
                     ticTacViewModel.createPlayers(binding!!.player1Name.text.toString(), "Computer")
                     findNavController().navigate(PlayerNameVsAiFragmentDirections.actionPlayerNameVsAiFragment2ToGameFragment())
                 }}

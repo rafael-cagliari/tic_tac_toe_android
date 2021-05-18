@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MatchHistoryFragment">
+    tools:context="MatchHistoryFragment"
+    android:background="#251EB3AE">
 
  <androidx.recyclerview.widget.RecyclerView
      android:id="@+id/recycler_view"
