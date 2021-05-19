@@ -127,19 +127,22 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
             )
             || sorted.containsAll(sequence7) || sorted.containsAll(sequence8)
         ) {
-          updateScore()}
+          updateScore("winner")}
         else if (_players.value!![0].moves.size + _players.value!![1].moves.size == 9) {
-            game_message = "It's a draw!"; resetGame()
+            updateScore("draw")
         } else switchTurn()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun updateScore() {
+    private fun updateScore(result:String) {
+        if(result == "draw") drawGameMessage()
 
+        else{
         if (turn == "player1") _players.value!![0].score = _players.value!![0].score + 1
         else _players.value!![1].score = _players.value!![1].score + 1
-        updateGameMessage()
-        insertDataToDatabase()
+            updateGameMessage()
+            insertDataToDatabase()}
+
        _players.notifyObserver()
         resetGame()
     }
@@ -154,7 +157,7 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
         switchFirstTurn()
         _players.value!![0].moves.clear()
         _players.value!![1].moves.clear()
-        viewModelScope.launch {  delay(500);
+        viewModelScope.launch {delay(500);
         _players.notifyObserver()}
     }
 
@@ -190,6 +193,10 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
     private fun updateGameMessage() {
         game_message = if (turn == "player1") "${_players.value!![0].name} Wins!"
         else "${_players.value!![1].name} Wins!"
+    }
+
+    private fun drawGameMessage(){
+        game_message = "It's a Draw!"
     }
 
     //after a match ends, the result is printed on the screen, this function is called whenever a cell is pressed next
