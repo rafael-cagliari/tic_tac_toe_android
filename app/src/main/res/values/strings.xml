@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Tic Tac Toe App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="test">test</string>
+    <string name="start_game">Start Game</string>
+    <string name="_0_x_0" translatable="false">0 X 0</string>
+    <string name="reset">Reset</string>
+    <string name="stop">Stop</string>
+    <string name="wins">Wins!</string>
+    <string name="select_game_mode">Select Game Mode</string>
+    <string name="player_vs_player">Player vs. Player</string>
+    <string name="player_vs_cpu">Player vs. CPU</string>
+    <string name="player_2">Player 2</string>
+    <string name="button" translatable="false">Button</string>
+    <string name="select_player_name">Select Player Name</string>
+    <string name="player_1">Player 1</string>
+    <string name="match_history">Match History</string>
+    <string name="draw">It\'s a Draw!</string>
+
+
+
+</resources>
