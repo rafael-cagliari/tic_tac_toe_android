@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jogo da Velha</string>
+    <string name="test">teste</string>
+    <string name="start_game">Começar Jogo</string>
+    <string name="reset">Reiniciar</string>
+    <string name="stop">Parar</string>
+    <string name="select_game_mode">Selecionar Modo de Jogo</string>
+    <string name="player_vs_player">Jogador vs. Jogador</string>
+    <string name="player_vs_cpu">Jogador vs. CPU</string>
+    <string name="player_2">Jogador 2</string>
+    <string name="select_player_name">Selecionar Nome do Jogador</string>
+    <string name="player_1">Jogador 1</string>
+    <string name="match_history">Histórico de Partidas</string>
+    <string name="wins">Venceu!</string>
+    <string name="draw">Empate.</string>
+</resources>

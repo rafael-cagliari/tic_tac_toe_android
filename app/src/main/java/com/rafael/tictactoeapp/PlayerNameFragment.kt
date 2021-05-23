@@ -32,7 +32,7 @@ class PlayerNameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
-        binding?.button?.text = "Start Game"
+        binding?.button?.text = getString(R.string.start_game)
         val ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
         //once the start button is pressed, player 1 and player 2 are created, receiving the names typed on the boxes
         binding?.button?.setOnClickListener {

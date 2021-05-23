@@ -40,6 +40,7 @@ class GameFragment : Fragment() {
         val fragmentBinding = GameFragmentBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         ticTacViewModel = ViewModelProvider(requireActivity()).get(TicTacViewModel::class.java)
+        ticTacViewModel.contextRequired(requireContext())
         setHasOptionsMenu(true)
         return fragmentBinding.root
     }

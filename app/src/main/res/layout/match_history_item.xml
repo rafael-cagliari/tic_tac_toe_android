@@ -9,9 +9,9 @@
         android:id="@+id/player1Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="20dp"
         android:text="Rafael"
+        android:textSize="25dp"
         android:textStyle="bold"
 
 
@@ -83,7 +83,7 @@
         android:id="@+id/delete_button"
         android:layout_width="38dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

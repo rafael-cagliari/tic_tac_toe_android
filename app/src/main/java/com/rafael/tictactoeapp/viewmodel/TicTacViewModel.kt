@@ -1,6 +1,7 @@
 package com.rafael.tictactoeapp.viewmodel
 
 import android.app.Application
+import android.content.Context
 import android.os.Build
 import android.os.Handler
 import androidx.annotation.RequiresApi
@@ -8,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.rafael.tictactoeapp.R
 import com.rafael.tictactoeapp.model.Match
 import com.rafael.tictactoeapp.model.Player
 import com.rafael.tictactoeapp.roomdb.MatchDao
@@ -27,6 +29,8 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
     val deleteResult = MutableLiveData<Int>()
     private var currentId: Long = -1
     lateinit var repository: MatchRepository
+
+    lateinit var context: Context
 
     init {
         val matchDao: MatchDao = MatchDatabase.getDatabase(application).matchDao()
@@ -191,12 +195,12 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
 
     //updates the variable game_message, which is observed on the game fragment
     private fun updateGameMessage() {
-        game_message = if (turn == "player1") "${_players.value!![0].name} Wins!"
-        else "${_players.value!![1].name} Wins!"
+        game_message = if (turn == "player1") "${_players.value!![0].name} ${context.getString(R.string.wins)}"
+        else "${_players.value!![1].name} ${context.getString(R.string.wins)}"
     }
 
     private fun drawGameMessage(){
-        game_message = "It's a Draw!"
+        game_message = context.getString(R.string.draw)
     }
 
     //after a match ends, the result is printed on the screen, this function is called whenever a cell is pressed next
@@ -207,6 +211,7 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
             _players.notifyObserver()
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun insertDataToDatabase() {
@@ -237,5 +242,9 @@ class TicTacViewModel(application: Application) : AndroidViewModel(application) 
                 id = currentId
             )
         }
+    }
+
+    fun contextRequired(requireContext: Context) {
+        context=requireContext
     }
 }

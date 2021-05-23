@@ -38,14 +38,14 @@
                 android:id="@+id/score_board_player1"
                 style="@style/score_board"
                 android:layout_marginEnd="18dp"
-                android:text="Player1"
+                android:text="@string/player_1"
                 app:layout_constraintEnd_toStartOf="@+id/score_board_scores"
                 tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/score_board_scores"
                 style="@style/score_board"
-                android:text="0 X 0"
+                android:text="@string/_0_x_0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
@@ -54,7 +54,7 @@
                 android:id="@+id/score_board_player2"
                 style="@style/score_board"
                 android:layout_marginStart="18dp"
-                android:text="Player 2"
+                android:text="@string/player_2"
                 app:layout_constraintStart_toEndOf="@+id/score_board_scores"
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -155,14 +155,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
-                android:text="Reset" />
+                android:text="@string/reset" />
 
             <Button
                 android:id="@+id/stop_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:text="Stop" />
+                android:text="@string/stop" />
 
         </LinearLayout>
 

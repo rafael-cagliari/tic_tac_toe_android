@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:text="Select Game Mode"
+        android:text="@string/select_game_mode"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
 
     <Button
         android:id="@+id/button_pvp"
-        android:text="Player vs. Player"
+        android:text="@string/player_vs_player"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -32,7 +32,7 @@
         style="@style/game_select_button"
         android:layout_marginTop="72dp"
 
-        android:text="Player vs. CPU"
+        android:text="@string/player_vs_cpu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_pvp" />
