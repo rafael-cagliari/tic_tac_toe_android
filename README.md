@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-Tic Tac Toe app is a simple recreation of the classic pen and paper game. Play with a friend or agains the machine.
+Tic Tac Toe app is a simple digital version of the classic pen and paper game. Play with a friend or against the machine.
 
 <p><img src="https://user-images.githubusercontent.com/59263016/119376536-717a0000-bc92-11eb-848a-fd59d2aabcfe.jpeg" alt="" width="350"></p>
 
